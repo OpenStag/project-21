@@ -52,7 +52,6 @@
                                  loading="lazy">
                             <div class="show-overlay">
                               
-                            
                             </div>
                             <div class="episode-badge"><?php echo htmlspecialchars($drama['episode']); ?></div>
                         </div>
