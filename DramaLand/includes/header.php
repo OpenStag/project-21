@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($page_title) ? $page_title . ' - ' . Dramaland : Dramaland; ?></title>
+    <title><?php echo isset($page_title) ? $page_title . ' - ' . SITE_NAME : SITE_NAME; ?></title>
+    <meta name="description" content="<?php echo isset($page_description) ? $page_description : 'Watch the latest K-Dramas and Asian dramas online'; ?>">
     
     <!-- CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/navbar.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/footer.css">
     
-    <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <?php if (isset($extra_css)): ?>
+        <?php foreach ($extra_css as $css): ?>
+            <link rel="stylesheet" href="<?php echo SITE_URL . $css; ?>">
+        <?php endforeach; ?>
+    <?php endif; ?>
 </head>
-<body>
-    <div id="wrapper">
+        </body>

@@ -1,340 +1,263 @@
-// Dramaland - Main JavaScript File
-
-
-
-$(document).ready(function() {
-    // Initialize all components when document is ready
-    initNavbar();
-    initHeroSection();
-    initDramaCards();
-    initScrollEffects();
-    initSearchFunctionality();
-    initResponsiveBehavior();
-});
-
-// Navbar Functionality
-function initNavbar() {
-    console.log('🎬 Dramaland navbar initialized');
+// Wait for DOM to load
+document.addEventListener('DOMContentLoaded', function() {
     
-    // Navbar scroll effect
-    var lastScrollTop = 0;
-    var navbar = $('.navbar');
-    var navbarHeight = navbar.outerHeight();
-
-    $(window).on('scroll', function() {
-        var scrollTop = $(this).scrollTop();
-        
-        if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
-            // Scroll down - hide navbar
-            navbar.addClass('navbar-hidden');
-        } else {
-            // Scroll up - show navbar
-            navbar.removeClass('navbar-hidden');
-        }
-        
-        // Add background when scrolled
-        if (scrollTop > 100) {
-            navbar.addClass('navbar-scrolled');
-        } else {
-            navbar.removeClass('navbar-scrolled');
-        }
-        
-        lastScrollTop = scrollTop;
-    });
-
-    // Mobile menu close on click
-    $('.navbar-nav .nav-link').on('click', function() {
-        $('.navbar-collapse').collapse('hide');
-    });
-
-    // Navbar search functionality
-    $('#navbar-search-form').on('submit', function(e) {
-        var query = $('#navbar-search-input').val().trim();
-        if (query.length < 2) {
-            e.preventDefault();
-            showNotification('Please enter at least 2 characters to search.', 'warning');
-        }
-    });
-
-    // User dropdown hover effect
-    $('.nav-item.dropdown').hover(
-        function() {
-            $(this).addClass('show');
-            $(this).find('.dropdown-menu').addClass('show');
-        },
-        function() {
-            $(this).removeClass('show');
-            $(this).find('.dropdown-menu').removeClass('show');
-        }
-    );
-}
-
-// Hero Section Functionality
-function initHeroSection() {
-    console.log('🎬 Dramaland hero section initialized');
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
     
-    // Hero section parallax effect
-    $(window).on('scroll', function() {
-        var scrolled = $(window).scrollTop();
-        $('.hero-section').css('transform', 'translateY(' + (scrolled * 0.5) + 'px)');
-    });
-
-    // Hero buttons animation
-    $('.hero-buttons .btn').hover(
-        function() {
-            var $btn = $(this);
-            $btn.addClass('btn-pulse');
-            setTimeout(function() {
-                $btn.removeClass('btn-pulse');
-            }, 600);
-        },
-        function() {
-            $(this).removeClass('btn-pulse');
-        }
-    );
-}
-
-// Drama Cards Functionality
-function initDramaCards() {
-    console.log('🎬 Dramaland drama cards initialized');
-    
-    // Card hover effects
-    $('.drama-card').hover(
-        function() {
-            // Mouse enter
-            var $card = $(this);
-            $card.addClass('card-hovered');
-            
-            // Add shimmer effect
-            $card.find('.drama-image').append('<div class="card-shimmer"></div>');
-            
-            // Play subtle animation
-            $card.find('.drama-badge, .drama-rank, .upcoming-badge').addClass('animate-badge');
-        },
-        function() {
-            // Mouse leave
-            var $card = $(this);
-            $card.removeClass('card-hovered');
-            $card.find('.card-shimmer').remove();
-            $card.find('.drama-badge, .drama-rank, .upcoming-badge').removeClass('animate-badge');
-        }
-    );
-
-    // Click handler for drama cards
-    $('.drama-card').on('click', function(e) {
-        if (!$(e.target).is('a, .btn')) {
-            var dramaTitle = $(this).find('.drama-title').text();
-            var $card = $(this);
-            
-            showNotification('Loading ' + dramaTitle + '...', 'info');
-            
-            // Simulate loading and redirect to details page
-            setTimeout(function() {
-                console.log('Redirecting to ' + dramaTitle + ' details page');
-            }, 1000);
-        }
-    });
-
-    // Favorite button functionality
-    $('.favorite-btn').on('click', function(e) {
-        e.stopPropagation();
-        var $btn = $(this);
-        var dramaId = $btn.data('drama-id');
-        var isFavorite = $btn.hasClass('active');
+    if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('show');
+            this.classList.toggle('active');
+        });
         
-        toggleFavorite(dramaId, !isFavorite, $btn);
-    });
-}
-
-// Scroll Effects
-function initScrollEffects() {
-    console.log('🎬 Dramaland scroll effects initialized');
-    
-    // Smooth scrolling for anchor links
-    $('a[href^="#"]').on('click', function(e) {
-        e.preventDefault();
-        var target = $(this).attr('href');
-        if ($(target).length) {
-            $('html, body').stop().animate({
-                scrollTop: $(target).offset().top - 80
-            }, 1000);
-        }
-    });
-
-    // Section reveal animation
-    var sections = $('section');
-    
-    function checkScroll() {
-        var windowHeight = $(window).height();
-        var windowTop = $(window).scrollTop();
-        var windowBottom = windowTop + windowHeight;
-        
-        sections.each(function() {
-            var $section = $(this);
-            var sectionTop = $section.offset().top;
-            var sectionBottom = sectionTop + $section.outerHeight();
-            
-            if ((sectionBottom >= windowTop) && (sectionTop <= windowBottom)) {
-                $section.addClass('section-visible');
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.remove('show');
+                mobileMenuBtn.classList.remove('active');
             }
         });
     }
     
-    // Initial check and scroll event
-    checkScroll();
-    $(window).on('scroll', checkScroll);
-}
-
-// Search Functionality
-function initSearchFunctionality() {
-    console.log('🎬 Dramaland search functionality initialized');
+    // User Dropdown Menu
+    const userMenuBtn = document.getElementById('userMenuBtn');
+    const userDropdown = document.getElementById('userDropdown');
     
-    // Search input auto-complete (simplified)
-    $('#navbar-search-input').on('input', debounce(function() {
-        var query = $(this).val().trim();
-        if (query.length >= 2) {
-            showSearchSuggestions(query);
-        }
-    }, 300));
-
-    // Quick search categories
-    $('.search-category').on('click', function() {
-        var category = $(this).data('category');
-        $('#navbar-search-input').val(category).focus();
-    });
-}
-
-// Responsive Behavior
-function initResponsiveBehavior() {
-    console.log('🎬 Dramaland responsive behavior initialized');
-    
-    // Handle window resize
-    var resizeTimer;
-    $(window).on('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-            updateResponsiveElements();
-        }, 250);
-    });
-
-    // Mobile-specific behaviors
-    if ($(window).width() < 768) {
-        enableMobileFeatures();
-    }
-}
-
-// Utility Functions
-function showNotification(message, type) {
-    if (type === undefined) {
-        type = 'info';
-    }
-    
-    var icons = {
-        success: 'fa-check-circle',
-        error: 'fa-exclamation-circle',
-        warning: 'fa-exclamation-triangle',
-        info: 'fa-info-circle'
-    };
-    
-    var notification = $(
-        '<div class="notification notification-' + type + '">' +
-        '<i class="fas ' + icons[type] + '"></i>' +
-        '<span>' + message + '</span>' +
-        '<button class="notification-close">&times;</button>' +
-        '</div>'
-    );
-    
-    $('body').append(notification);
-    
-    // Animate in
-    notification.slideDown(300);
-    
-    // Auto remove after 5 seconds
-    setTimeout(function() {
-        notification.slideUp(300, function() {
-            $(this).remove();
+    if (userMenuBtn && userDropdown) {
+        userMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
         });
-    }, 5000);
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
+    }
     
-    // Close button
-    notification.find('.notification-close').on('click', function() {
-        notification.slideUp(300, function() {
-            $(this).remove();
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href !== '#' && href !== '#!') {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
         });
     });
-}
-
-function toggleFavorite(dramaId, isFavorite, $button) {
-    // Simulate API call
-    showNotification(isFavorite ? 'Added to favorites' : 'Removed from favorites', 'success');
     
-    // Update button state
-    $button.toggleClass('active', isFavorite);
-    $button.find('i')
-        .toggleClass('fas', isFavorite)
-        .toggleClass('far', !isFavorite);
-}
-
-function showSearchSuggestions(query) {
-    console.log('Fetching suggestions for: ' + query);
-}
-
-function updateResponsiveElements() {
-    var isMobile = $(window).width() < 768;
-    
-    if (isMobile) {
-        $('body').addClass('mobile-view');
-    } else {
-        $('body').removeClass('mobile-view');
-    }
-}
-
-function enableMobileFeatures() {
-    // Add touch effects for mobile
-    $('.drama-card').on('touchstart', function() {
-        $(this).addClass('touch-active');
-    }).on('touchend', function() {
-        $(this).removeClass('touch-active');
+    // Add loading animation to images
+    const images = document.querySelectorAll('.show-image img');
+    images.forEach(img => {
+        img.addEventListener('load', function() {
+            this.style.opacity = '1';
+        });
+        
+        // Set initial opacity
+        img.style.opacity = '0';
+        img.style.transition = 'opacity 0.3s ease';
     });
-}
-
-// Performance optimization: Debounce function
-function debounce(func, wait) {
-    var timeout;
-    return function executedFunction() {
-        var context = this;
-        var args = arguments;
-        var later = function() {
-            clearTimeout(timeout);
-            func.apply(context, args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Performance optimization: Throttle function
-function throttle(func, limit) {
-    var inThrottle;
-    return function() {
-        var context = this;
-        var args = arguments;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(function() {
-                inThrottle = false;
-            }, limit);
+    
+    // Lazy loading for images (if needed for performance)
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        observer.unobserve(img);
+                    }
+                }
+            });
+        });
+        
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+    
+    // Add scroll effect to navbar
+    let lastScroll = 0;
+    const navbar = document.querySelector('.navbar');
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            navbar.style.boxShadow = 'none';
+        } else {
+            navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.3)';
         }
-    };
+        
+        lastScroll = currentScroll;
+    });
+    
+    // Add hover effect to show cards
+    const showCards = document.querySelectorAll('.show-card');
+    showCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.zIndex = '10';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.zIndex = '1';
+        });
+    });
+    
+    // Search functionality (if search input exists)
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        let searchTimeout;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            const query = this.value.trim();
+            
+            if (query.length >= 2) {
+                searchTimeout = setTimeout(() => {
+                    performSearch(query);
+                }, 500);
+            }
+        });
+    }
+    
+    // Handle form submissions with AJAX (example)
+    const forms = document.querySelectorAll('form[data-ajax="true"]');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const action = this.getAttribute('action');
+            
+            fetch(action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Handle success
+                    console.log('Form submitted successfully');
+                } else {
+                    // Handle error
+                    console.error('Form submission failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+});
+
+// Search function
+function performSearch(query) {
+    // This would typically make an AJAX call to search.php
+    console.log('Searching for:', query);
+    
+    fetch(`api/search.php?q=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            // Handle search results
+            displaySearchResults(data);
+        })
+        .catch(error => {
+            console.error('Search error:', error);
+        });
 }
 
-// Export functions for global access
-window.Dramaland = {
-    showNotification: showNotification,
-    toggleFavorite: toggleFavorite,
-    debounce: debounce,
-    throttle: throttle
-};
+// Display search results
+function displaySearchResults(results) {
+    const searchResults = document.getElementById('searchResults');
+    if (!searchResults) return;
+    
+    if (results.length === 0) {
+        searchResults.innerHTML = '<p>No results found</p>';
+        return;
+    }
+    
+    let html = '';
+    results.forEach(show => {
+        html += `
+            <div class="search-result-item" onclick="window.location.href='pages/details.php?id=${show.S_ID}'">
+                <img src="${show.Image}" alt="${show.Title}">
+                <div class="result-info">
+                    <h4>${show.Title}</h4>
+                    <p>${show.Category}</p>
+                </div>
+            </div>
+        `;
+    });
+    
+    searchResults.innerHTML = html;
+}
 
-console.log('🚀 Dramaland main.js loaded successfully!');
+// Utility function to show notifications
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateY(0)';
+    }, 10);
+    
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+// Add CSS for notifications dynamically
+const notificationStyle = document.createElement('style');
+notificationStyle.textContent = `
+    .notification {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        padding: 15px 25px;
+        border-radius: 8px;
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        z-index: 10000;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s ease;
+        max-width: 300px;
+    }
+    
+    .notification-info {
+        background: #3498db;
+    }
+    
+    .notification-success {
+        background: #2ecc71;
+    }
+    
+    .notification-error {
+        background: #e74c3c;
+    }
+    
+    .notification-warning {
+        background: #f39c12;
+    }
+`;
+document.head.appendChild(notificationStyle);
