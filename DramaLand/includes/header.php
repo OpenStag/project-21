@@ -7,7 +7,7 @@
     <meta name="description" content="<?php echo isset($page_description) ? $page_description : 'Watch the latest K-Dramas and Asian dramas online'; ?>">
     
     <!-- CSS -->
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/home.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/navbar.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/footer.css">
     
