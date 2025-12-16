@@ -5,19 +5,20 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #000;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
     color: #fff;
+    line-height: 1.6;
 }
 
 /* Hero Section */
 .hero {
     position: relative;
-    height: 500px;
-    background: url('Traumacode.jpg') center/cover  no-repeat;
+    height: 600px;
+    background: url('Traumacode.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     background-size: cover;
     background-position: center;
     overflow: hidden;
@@ -30,142 +31,322 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+    z-index: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
-    text-align: center;
-    padding: 20px;
+    text-align: left;
+    padding: 60px 80px;
+    max-width: 600px;
+    animation: slideInLeft 0.8s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .hero-title {
-    font-size: 48px;
-    font-weight: 300;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-    line-height: 1.3;
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.8);
+    line-height: 1.2;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .watch-btn {
-    background-color: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #ff4d4d 0%, #ff3333 100%);
     color: #fff;
-    border: 2px solid #fff;
-    padding: 12px 35px;
+    border: none;
+    padding: 16px 45px;
     font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(255, 77, 77, 0.3);
+    letter-spacing: 0.5px;
+    display: inline-block;
 }
 
 .watch-btn:hover {
-    background-color: #fff;
-    color: #000;
-    transform: scale(1.05);
+    background: linear-gradient(135deg, #ff3333 0%, #ff1a1a 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 45px rgba(255, 77, 77, 0.5);
+}
+
+.watch-btn:active {
+    transform: translateY(-1px);
 }
 
 /* Content Sections */
 .content-section {
-    padding: 50px 40px;
+    padding: 80px 60px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
+.container {
+    width: 100%;
+}
+
 .section-title {
-    font-size: 28px;
-    font-weight: 400;
-    margin-bottom: 30px;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 50px;
     color: #fff;
+    position: relative;
+    padding-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #ff4d4d 0%, #ff8888 100%);
+    border-radius: 2px;
 }
 
 /* Drama Grid */
 .drama-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .drama-card {
     position: relative;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.3s ease;
-    background-color: #1a1a1a;
+    background-color: #0f0f1a;
+    border: 1px solid rgba(255, 77, 77, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
 }
 
 .drama-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-12px) scale(1.02);
+    border-color: rgba(255, 77, 77, 0.3);
+    box-shadow: 0 20px 50px rgba(255, 77, 77, 0.2);
+}
+
+.drama-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 400px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a4e 100%);
 }
 
 .drama-image {
     width: 100%;
-    height: 400px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.drama-card:hover .drama-image {
+    transform: scale(1.1);
+}
+
+.show-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 77, 77, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    z-index: 3;
+}
+
+.drama-card:hover .show-overlay {
+    background: rgba(255, 77, 77, 0.15);
+}
+
+.episode-badge,
+.date-badge {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #ff4d4d 0%, #ff3333 100%);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    z-index: 4;
+    box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+    letter-spacing: 0.5px;
 }
 
 .drama-info {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #0d0d0d;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(15, 15, 25, 0.9) 0%, rgba(30, 30, 50, 0.9) 100%);
+    backdrop-filter: blur(5px);
+    border-top: 1px solid rgba(255, 77, 77, 0.1);
 }
 
 .drama-title {
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 600;
     color: #fff;
-    flex: 1;
+    transition: color 0.3s ease;
+    letter-spacing: -0.3px;
 }
 
-.episode-badge {
-    background-color: #333;
-    color: #fff;
-    padding: 6px 14px;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 600;
+.drama-card:hover .drama-title {
+    color: #ff4d4d;
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-    .hero {
-        height: 350px;
-    }
-    
-    .hero-title {
-        font-size: 32px;
-    }
-    
+@media (max-width: 1024px) {
     .content-section {
-        padding: 30px 20px;
+        padding: 60px 40px;
     }
     
     .section-title {
-        font-size: 24px;
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+    
+    .hero-content {
+        padding: 50px 50px;
+    }
+    
+    .hero-title {
+        font-size: 48px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        height: 450px;
+    }
+    
+    .hero-content {
+        padding: 40px 40px;
+        max-width: 100%;
+    }
+
+    .hero-title {
+        font-size: 40px;
+        margin-bottom: 30px;
+    }
+    
+    .content-section {
+        padding: 50px 30px;
+    }
+    
+    .section-title {
+        font-size: 28px;
+        margin-bottom: 35px;
     }
     
     .drama-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
     }
     
-    .drama-image {
-        height: 320px;
+    .drama-image-wrapper {
+        height: 300px;
     }
 }
 
 @media (max-width: 480px) {
+    .hero {
+        height: 350px;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .hero-content {
+        padding: 30px 20px;
+        max-width: 100%;
+    }
+
     .hero-title {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .watch-btn {
+        padding: 12px 30px;
+        font-size: 14px;
+    }
+    
+    .content-section {
+        padding: 40px 20px;
+    }
+    
+    .section-title {
         font-size: 24px;
+        margin-bottom: 25px;
     }
     
     .drama-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .drama-image-wrapper {
+        height: 280px;
+    }
+
+    .episode-badge,
+    .date-badge {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+
+    .drama-info {
+        padding: 18px;
+    }
+
+    .drama-title {
+        font-size: 16px;
     }
 }

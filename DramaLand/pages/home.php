@@ -1,23 +1,24 @@
 
 <!DOCTYPE html>
-
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-Drama Streaming - DramaLand</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/home.css">
 </head>
 <body>
     <?php include '../includes/navbar.php'; ?>
 
     <!-- Hero Section -->
-    <section class="hero" style="background-image: url('../assets/images/covers/The Trauma Code.jpg');">
+    <section class="hero" style="background-image: url('../assets/images/covers/Traumacode.jpg');">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">The Trauma Code<br>Heroes on Call</h1>
-            <button class="watch-btn">Watch Now</button>
+            <button class="watch-btn">▶ Watch Now</button>
         </div>
     </section>
 
@@ -127,12 +128,12 @@
                     [
                         'title' => 'Alchemy of Souls',
                         'episode' => 'EP 10',
-                        'image' => '../assets/images/covers/alchemyofsouls.jpg'
+                        'image' => '../assets/images/covers/alchemysouls.jpg'
                     ],
                     [
                         'title' => 'Descendants of the Sun',
                         'episode' => 'EP 16',
-                        'image' => '../assets/images/covers/Decendantsofthesun.jpg'
+                        'image' => '../assets/images/covers/descendantssun.jpg'
                     ],
                     [
                         'title' => 'Blind',
@@ -175,7 +176,7 @@
                     [
                         'title' => 'Genie, Make a Wish',
                         'date' => 'Oct 3',
-                        'image' => '../assets/images/covers/makeawish.jpg'
+                        'image' => '../assets/images/covers/geniewish.jpg'
                     ],
                     [
                         'title' => 'To the Moon',
@@ -185,7 +186,7 @@
                     [
                         'title' => 'Walking on Thin Ice',
                         'date' => 'Sep 19',
-                        'image' => '../assets/images/covers/walkingonthinice.jpeg'
+                        'image' => '../assets/images/covers/abc.png'
                     ]
                 ];
 

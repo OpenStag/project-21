@@ -65,19 +65,108 @@
             <h2>Results</h2>
             
             <div class="results-box vh-269">
-
-                <div class="result-card">
-                    <div class="results-image-placeholder">
-                        <img src="../assets/images/cast/lastempress1.jpg" alt="" class="results-image">
-                    </div>
-
-                    <div class="reults-details"><br>
-                        <p class="watch-free">Watch Free</p>
-                        <p class="drama-title">The Last Empress</p>
-                    </div>
-                </div>
-
-
+                <?php
+                // Check if search was submitted
+                if (!empty($_GET)) {
+                    // Include database connection
+                    require_once __DIR__ . '/../includes/db_connect.php';
+                    
+                    try {
+                        // Get search parameters with proper validation
+                        $releaseDate = isset($_GET['release-date']) ? trim($_GET['release-date']) : '';
+                        $rating = isset($_GET['rating']) ? trim($_GET['rating']) : '';
+                        $episodes = isset($_GET['episodes']) ? trim($_GET['episodes']) : '';
+                        $people = isset($_GET['people']) ? trim($_GET['people']) : '';
+                        
+                        // Build dynamic SQL query based on shows table schema
+                        $sql = "SELECT DISTINCT s.*, 
+                                       (SELECT GROUP_CONCAT(actor_name SEPARATOR ', ') 
+                                        FROM shows_cast WHERE actor_id = s.s_id) as cast_list
+                                FROM shows s
+                                LEFT JOIN shows_cast sc ON s.s_id = sc.s_id
+                                WHERE 1=1";
+                        
+                        $conditions = [];
+                        $types = '';
+                        $params = [];
+                        
+                        // Filter by release date (partial match)
+                        if (!empty($releaseDate)) {
+                            $sql .= " AND s.Release_date LIKE ?";
+                            $types .= 's';
+                            $params[] = "%$releaseDate%";
+                        }
+                        
+                        // Filter by category (matches rating field intent)
+                        if (!empty($rating)) {
+                            $sql .= " AND s.category LIKE ?";
+                            $types .= 's';
+                            $params[] = "%$rating%";
+                        }
+                        
+                        // Filter by episode count
+                        if (!empty($episodes) && is_numeric($episodes)) {
+                            $sql .= " AND s.episodes_count = ?";
+                            $types .= 'i';
+                            $params[] = intval($episodes);
+                        }
+                        
+                        // Filter by people (actor names)
+                        if (!empty($people)) {
+                            $sql .= " AND sc.actor_name LIKE ?";
+                            $types .= 's';
+                            $params[] = "%$people%";
+                        }
+                        
+                        // Prepare and execute
+                        $stmt = $conn->prepare($sql);
+                        if (!empty($params)) {
+                            $stmt->bind_param($types, ...$params);
+                        }
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $imagePath = !empty($row['cover_image']) 
+                                    ? '../' . htmlspecialchars($row['cover_image']) 
+                                    : '../assets/images/covers/placeholder.jpg';
+                                $title = htmlspecialchars($row['title']);
+                                $description = htmlspecialchars(substr($row['description'], 0, 100));
+                                
+                                echo '<div class="result-card">';
+                                echo '<div class="results-image-placeholder">';
+                                echo '<img src="' . $imagePath . '" alt="' . $title . '" class="results-image" onerror="this.src=\'../assets/images/covers/placeholder.jpg\'">';
+                                echo '</div>';
+                                echo '<div class="results-details">';
+                                echo '<p class="watch-free">Watch Free</p>';
+                                echo '<p class="drama-title">' . $title . '</p>';
+                                if (!empty($description)) {
+                                    echo '<p class="description">' . $description . '...</p>';
+                                }
+                                echo '<p><strong>Release Date:</strong> ' . htmlspecialchars($row['Release_date']) . '</p>';
+                                echo '<p><strong>Category:</strong> ' . htmlspecialchars($row['category']) . '</p>';
+                                echo '<p><strong>Episodes:</strong> ' . htmlspecialchars($row['episodes_count']) . '</p>';
+                                echo '<p><strong>Running Time:</strong> ' . htmlspecialchars($row['running_time']) . ' min</p>';
+                                if (!empty($row['cast_list'])) {
+                                    echo '<p><strong>Cast:</strong> ' . htmlspecialchars($row['cast_list']) . '</p>';
+                                }
+                                echo '</div>';
+                                echo '</div>';
+                            }
+                        } else {
+                            echo '<p style="color: #ccc; padding: 20px;">No results found matching your criteria. Try adjusting your search filters.</p>';
+                        }
+                        
+                        $stmt->close();
+                        
+                    } catch (Exception $e) {
+                        echo '<p style="color: #ff4d4d; padding: 20px;">Search error: ' . htmlspecialchars($e->getMessage()) . '</p>';
+                    }
+                } else {
+                    echo '<p style="color: #ccc; padding: 20px; text-align: center;">Enter search criteria above to find shows.</p>';
+                }
+                ?>
             </div>
         </section>
     </div>

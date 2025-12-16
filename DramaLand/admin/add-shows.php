@@ -1,17 +1,85 @@
 <?php
+// Enable mysqli error reporting for easier debugging
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+require_once __DIR__ . '/../includes/db_connect.php';
+
+$message = null;
+$error = null;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = $_POST['title'] ?? '';
-    $description = $_POST['description'] ?? '';
-    $year = $_POST['release_year'] ?? '';
-    $category = $_POST['category'] ?? '';
-    $runtime = $_POST['running_time'] ?? '';
-    $episodes_count = $_POST['episodes_count'] ?? '';
+    try {
+        // Basic input collection
+        $title = trim($_POST['title'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $release_date = trim($_POST['release_date'] ?? '');
+        $category = trim($_POST['category'] ?? '');
+        $runtime = trim($_POST['running_time'] ?? '');
+        $episodes_count = (int)($_POST['episodes_count'] ?? 0);
 
-    $episode_names = $_POST['episode_name'] ?? [];
-    $episode_links = $_POST['episode_link'] ?? [];
-    $actor_names   = $_POST['actor_name'] ?? [];
+        $episode_names = $_POST['episode_name'] ?? [];
+        $episode_links = $_POST['episode_link'] ?? [];
+        $actor_names   = $_POST['actor_name'] ?? [];
 
-    $message = "Item '$title' prepared for publishing!";
+        // Minimal validation
+        if ($title === '' || $release_date === '' || $category === '') {
+            throw new Exception('Title, Release Date, and Category are required.');
+        }
+
+        // Handle cover upload (optional)
+        $coverPath = null;
+        if (!empty($_FILES['cover_image']['name'])) {
+            $uploadsDir = __DIR__ . '/../assets/images/covers';
+            if (!is_dir($uploadsDir)) {
+                // Try to create directory if missing
+                @mkdir($uploadsDir, 0775, true);
+            }
+            $ext = pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION);
+            $safeName = preg_replace('/[^a-zA-Z0-9_-]/', '_', strtolower($title));
+            $fileName = $safeName . '_' . time() . '.' . $ext;
+            $target = $uploadsDir . '/' . $fileName;
+            if (!move_uploaded_file($_FILES['cover_image']['tmp_name'], $target)) {
+                throw new Exception('Failed to upload cover image.');
+            }
+            // Path relative for web usage
+            $coverPath = 'assets/images/covers/' . $fileName;
+        }
+
+        // Start transaction
+        $conn->begin_transaction();
+
+        // Insert show/item
+        // Align with DB schema: uses `Release_date` instead of `release_year`
+        $stmt = $conn->prepare(
+            "INSERT INTO shows (title, description, Release_date, category, run_time, episode, image) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        );
+        // Bind Release_date as string to accommodate DATE/VARCHAR
+        $stmt->bind_param(
+            'sssssis',
+            $title,
+            $description,
+            $release_date,
+            $category,
+            $runtime,
+            $episodes_count,
+            $coverPath
+        );
+        $stmt->execute();
+        $showId = $stmt->insert_id;
+        $stmt->close();
+
+
+        // Commit
+        $conn->commit();
+
+        $message = "Item '$title' published successfully!";
+    } catch (Throwable $e) {
+        // Rollback on error and expose a concise error for debugging
+        if (isset($conn) && $conn instanceof mysqli) {
+            $conn->rollback();
+        }
+        $error = 'Failed to publish: ' . $e->getMessage();
+    }
 }
 ?>
 
@@ -150,6 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Add new item</h2>
 
     <?php if(isset($message)) echo "<p style='color:green;'>$message</p>"; ?>
+    <?php if(isset($error)) echo "<p style='color:#ff4d4d;'>$error</p>"; ?>
 
     <form method="POST" enctype="multipart/form-data">
         
@@ -161,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="form-group"><input type="text" name="title" placeholder="Title"></div>
         <div class="form-group"><textarea name="description" placeholder="Description" rows="3"></textarea></div>
-        <div class="form-group"><input type="text" name="release_year" placeholder="Release Year"></div>
+        <div class="form-group"><input type="text" name="release_date" placeholder="Release Date (e.g., 2024-03-01)"></div>
         
         <div class="form-group">
             <select name="category">
