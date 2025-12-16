@@ -1,27 +1,19 @@
 <?php
-require_once 'config.php';
+// Database Configuration
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'dramaland_db');
 
-class Database {
-    private $host = DB_HOST;
-    private $dbname = 'dramaland_db'; // Hardcoded database name
-    private $username = DB_USER;
-    private $password = DB_PASS;
-    public $conn;
+// Site Configuration
+define('SITE_NAME', 'DramaLand');
+define('SITE_URL', 'http://localhost/dramaland');
 
-    public function getConnection() {
-        $this->conn = null;
-        try {
-            $this->conn = new PDO(
-                "mysql:host=" . $this->host . ";dbname=dramaland_db", // Directly in connection string
-                $this->username,
-                $this->password
-            );
-            $this->conn->exec("set names utf8");
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $exception) {
-            echo "Connection error: " . $exception->getMessage();
-        }
-        return $this->conn;
-    }
+// Session Configuration
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
+
+// Timezone
+date_default_timezone_set('Asia/Colombo');
 ?>
