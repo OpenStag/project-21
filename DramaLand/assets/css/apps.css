@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Caprasimo&display=swap');
+
+
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- Hero Section Main Container --- */
+.hero-section {
+    
+    background: url('../images/covers/movieapp1.jpg') no-repeat center center/cover;
+    color: #fff;
+    position:relative;
+    width: 100vw; 
+    min-height: 90vh; 
+    
+
+    display: flex; 
+    
+    padding: 2vh 0; 
+    box-sizing: border-box;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* --- Dark Overlay--- */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    z-index: -1;
+}
+
+/* --- Text Content Styling --- */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    /* max-width: 80%;  */
+    margin-left: 2vw;
+    
+}
+
+.hero-title{
+    margin-bottom: 200px; 
+    margin-left: 3vw;
+    text-align: right;
+}
+
+.hero-content h2 {
+   
+    line-height: 1.1;
+    font-weight: 800;
+    text-transform: uppercase;
+   
+   
+    font-family: 'Caprasimo', cursive;
+}
+
+.hero-title .line-one{
+    font-size: 68px;
+   margin-top: 5px;
+   margin-bottom: 10px;
+}
+.hero-title .line-two{
+    font-size: 68px;
+    margin: 0;
+}
+
+
+.hero_subtitle {
+    /* text-align: right; */
+    font-family: 'Caprasimo', cursive;
+    font-size: 1.8vw; 
+    line-height: 1.6;
+    margin-left: 23vw;
+    /* margin-bottom: 3vh; */
+    margin-top: -16vh;
+    
+}
+
+
+@media (max-width: 991px) {
+    .hero-section {
+        min-height: 70vh; 
+        /* Center content horizontally */
+        align-items: flex-start; 
+        justify-content: center;
+    }
+
+    /* Override the desktop positioning and center the content block */
+    .hero-content {
+        width: 90%;
+        margin: 0 auto; 
+        padding-top: 5vh;
+        text-align: center;
+    }
+
+    
+    .hero-title {
+        text-align: center;
+        margin-left: 0;
+        margin-bottom: 10vh; 
+    }
+
+    .hero-title .line-one,
+    .hero-title .line-two {
+        font-size: 6vw; 
+        margin-bottom: 1vh;
+    }
+
+    .hero_subtitle {
+        font-size: 2.5vw; 
+        margin-left: 0; /* Remove hard-coded left margin */
+        margin-top: -5vh; /* Reduce negative margin greatly */
+        text-align: center;
+    }
+}
+
+/* --- MOBILE VIEW (max-width: 767px) --- */
+
+@media (max-width: 767px) {
+    .hero-section {
+        height: 200px; 
+        min-height: 200px; 
+        background-position: top center;
+        align-items: center; 
+    }
+
+    .hero-content {
+        width: 100%;
+        padding: 0 5vw; /* Add side padding */
+        margin: 0;
+        padding-top: 0; 
+    }
+
+    /* Further adjust title sizing for mobile */
+    .hero-title {
+        margin-bottom: 2vh; 
+    }
+    
+    .hero-title .line-one,
+    .hero-title .line-two {
+        font-size: 5vw; 
+    }
+
+    .hero_subtitle {
+        font-size: 2.5vw; 
+        margin-top: 0; 
+        padding: 0 2vw;
+    }
+}
+
+                /* Streaming Section */
+
+
+.streaming-section {
+    width: 100vw;
+    margin: 0;
+    padding: 5vh 0; 
+    background-color: #000;
+    box-sizing: border-box;
+}
+
+.section-heading {
+    text-align: center;
+    font-size: 2.8vw; 
+    font-weight: bold;
+    color: #fff; 
+    margin: 4vh 0 4vh 0; 
+}
+
+/*  Player Streaming Section */
+.players-streaming {
+    max-width: 95%; 
+    margin: 0 auto;
+}
+
+.players-grid {
+    display: grid;
+    /* 3 equal columns */
+    grid-template-columns: repeat(3, 1fr); 
+    /* Spacing between grid items */
+    gap: 2.5vw; /* Increased gap */
+    padding: 0 2.5%; /* Reduced side padding to utilize more space */
+}
+
+.player-card,
+.mobile-card {
+    position: relative;
+    display: block; 
+    
+    background-color: #000; 
+    padding: 0; 
+    box-shadow: 0 0.5vh 1vh rgba(255, 255, 255, 0.1); 
+    overflow: hidden; 
+}
+
+
+.download-text {
+    /* Absolute positioning to overlay the text */
+    position: absolute;
+    bottom: 4%; /* Near the bottom of the card */
+    left: 0;
+    /* Center the text within the card width */
+    text-align: center;
+    width: 100%;
+    
+    color: #fff; /* White text */
+    font-size: 1.2vw;
+    padding: 0; /* Reset padding */
+    margin: 0; /* Reset margin */
+    /* Ensure text is above the image but centered */
+    z-index: 10;
+    /* Add a subtle text shadow for readability over the logo */
+    text-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.9);
+}
+
+/*  Mobile Streaming Section  */
+.mobile-streaming {
+    max-width: 95%; /* Increased width */
+    margin: 0 auto;
+    padding-top: 5vh; /* Added space between sections */
+    padding-bottom: 5vh;
+}
+
+.mobile-cards-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 6vw; /* Wider gap between the two cards */
+    padding: 0 10%;
+}
+
+.mobile-card {
+    width: 40%; /* Slightly wider mobile cards */
+}
+
+
+.logo-placeholder {
+    width: 100%; 
+    padding-top: 50%; 
+    position: relative; 
+    overflow: hidden;
+    margin: 0; /* Remove bottom margin */
+    background-color: transparent !important;
+    border: none !important;
+}
+
+
+.android-mobile-logo-box,
+.apple-mobile-logo-box {
+    width: 100%; /* Image container fills the whole mobile card */
+    padding-top: 80%; 
+}
+
+/* Ensure the image fits perfectly inside its container */
+.logo-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    position: absolute; 
+    top: 0;
+    left: 0;
+}
+
+
+
+/* --- RESPONSIVENESS --- */
+
+
+
+@media (max-width: 1024px) {
+    .section-heading {
+        font-size: 3vw;
+    }
+    .players-grid {
+        gap: 3vw;
+    }
+    .download-text {
+        font-size: 1.8vw; 
+    }
+    .mobile-card {
+        width: 45%; 
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .section-heading {
+        font-size: 4vw;
+        margin: 4vh 0 2vh 0;
+    }
+    
+    /* Change player section to 2 columns */
+    .players-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5vw; /* Wider gap */
+        padding: 0 5%;
+    }
+
+    /* Player card logo containers */
+    .logo-placeholder {
+        padding-top: 55%; /* Adjusted aspect ratio for 2-column layout */
+    }
+    
+    .download-text {
+        font-size: 2.8vw; /* Larger font for readability */
+    }
+
+   
+    .mobile-cards-wrapper {
+        gap: 10vw;
+        padding: 0 5%;
+    }
+    .mobile-card {
+        width: 45%; 
+    }
+    
+    .android-mobile-logo-box,
+    .apple-mobile-logo-box {
+        padding-top: 90%; /* Adjusted aspect ratio */
+    }
+    
+    .mobile-card .download-text {
+        font-size: 3.5vw;
+    }
+}
+
+/* Mobile View  */
+@media (max-width: 480px) {
+    .section-heading {
+        font-size: 6vw; 
+    }
+    
+    .players-grid {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 3vw; 
+        padding: 0 5%; 
+    }
+    
+    .logo-placeholder {
+        /* Adjusted aspect ratio to fit two cards side-by-side better */
+        padding-top: 60%; 
+    }
+
+    /* Make text readable on mobile */
+    .download-text {
+        font-size: 3.5vw; /* Adjusted font size for two columns */
+        bottom: 5%;
+        text-shadow: 0 0 0.8vw rgba(0, 0, 0, 0.9);
+    }
+    
+    /* Stack mobile cards vertically */
+    .mobile-cards-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 3vh;
+    }
+    
+    .mobile-card {
+        width: 80%; /* Wider single column card */
+    }
+    
+    .android-mobile-logo-box,
+    .apple-mobile-logo-box {
+        padding-top: 55%; /* More landscape aspect ratio for single column */
+    }
+    
+    .mobile-card .download-text {
+        font-size: 4.5vw;
+    }
+}
