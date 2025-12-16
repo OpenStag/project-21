@@ -1,0 +1,392 @@
+   
+        :root {
+            --input-bg-dark: rgba(47, 39, 39, 0.49); 
+            /* Black background for the page */
+            --page-bg: #000;
+            --light-color: rgba(255, 255, 255, 1);
+            /* Converted from rgba(217, 217, 217, 1) - used for the Search/Keywords container */
+            --light-grey: #d9d9d9; 
+            --vw-base: 14.4vw; 
+            --vh-base: 10.8vh;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+
+            width: 100%; 
+            min-height: 100vh; 
+            background-color: var(--page-bg);
+            color: var(--light-color);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.2;
+            overflow-x: hidden; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-content {
+            margin-top: 7.5vh; 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+        
+        .advanced-search-container {
+
+            width: 38vw;
+            /* width: 594px; */
+            min-height: 60vh; 
+            border: 1px solid var(--light-color);
+            border-radius: 0.92vh; /* 10px / 1080 * 100 */
+            padding: 3.7vh 0; 
+            background: var(--page-bg);
+            margin-bottom: 5vh;
+        }
+
+        .topic-header{
+            margin-bottom: 30px ;
+            border-bottom: 1px solid var(--light-color);;
+        }
+
+        
+        .advanced-search-container h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 4vh;
+            padding-left: 2vw;
+        }
+
+
+
+        
+.search-options {
+    width: 83%;
+    border: 1px solid var(--light-color);
+    border-radius: 0.46vh;
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 4vh;
+    margin-left: 4vw;
+}
+
+/* All buttons */
+.search-options button {
+    padding: 2.5vh 0;
+    border: none;
+    font-size: 1.8vh;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: var(--page-bg);
+    color: var(--light-color);
+    position: relative;
+}
+
+        .search-btn {
+            flex: 1; /* 1 unit */
+        }
+
+        .keywords-btn {
+            flex: 1.5; /* 1.5 units */
+        }
+
+        
+        .search-btn,
+        .keywords-btn  {
+            background-color: var(--page-bg); 
+            color: var(--light-color);
+        }
+
+
+        /* Divider between buttons (attached to search button) */
+.search-btn::after {
+    content: "";
+    position: absolute;
+    top: 15%;
+    right: 0;
+    width: 1px;
+    height: 70%;
+    background-color: var(--light-color);
+}
+
+
+        /*   Form Fields  */
+        .genre-section {
+            padding-bottom: 3vh;
+            margin-left: 2vw;
+        }
+
+        .genre-section h3 {
+            font-size: 2.5vh;
+            margin-bottom: 0.5vh;
+        }
+        
+        .genre-text {
+            /* font-size: 1.4vh; */
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3vh;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid var(--light-color);
+            padding: 2.5vh 1.5vw;
+
+            background-color: var(--page-bg);
+        }
+
+        .form-row label {
+            
+            width: 38%; 
+            font-size: 2.3vh;
+            font-weight: 700;
+            color: var(--light-color);
+            background: transparent; 
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        input[type="text"] {
+            /* width: 318px  */
+            width: 53.5%; 
+            /* height: 42px  */
+            height: 3.9vh;
+            /* padding: 0 0.5vw; */
+            margin-right: 3vw;
+            background-color: var(--input-bg-dark);
+            border: 1px solid var(--light-color);
+            border-radius: 0.92vh;
+            color: var(--light-color);
+            font-size: 1.8vh;
+            outline: none;
+        }
+
+        /*   Action Buttons  */
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5vh; 
+        }
+
+        .form-actions button {
+            /* width: 142px 
+             height: 53px  */
+            width: 9.86vw;
+            height: 4.9vh;
+            font-size: 1.8vh;
+            font-weight: 700;
+            border-radius: 0.92vh;
+            cursor: pointer;
+            margin-left: 2vw;
+            margin-right: 2vw;
+        }
+
+        .submit-search-btn {
+            background: rgba(20, 6, 127, 1);
+            border: 1px solid var(--light-color);
+            color: var(--light-color);
+        }
+
+        .reset-btn {
+            background: rgba(255, 255, 255, 0);
+            border: 1px solid var(--light-color);
+            color: var(--light-color);
+        }
+        
+
+        /*  6. Results Section   */
+        .results-container {
+            /* width: 617px */
+            width: 40vw;
+            margin-top: 5vh;
+            margin-left: 2vw;
+            margin-bottom: 4vh;
+        }
+
+        .results-container h2 {
+            font-size: 4.44vh;
+            font-weight: 700;
+            margin-bottom: 3vh;
+        }
+
+        .results-box {
+            /* height: 269px */
+            min-height: 24.9vh; 
+            border: 1px solid rgba(232, 221, 221, 1);
+             border-radius: 0.92vh;
+             background-color: var(--page-bg); 
+             padding: 2vh 1.5vw;
+
+             display: flex;
+             flex-wrap: wrap;
+              gap: 2vw;
+        }
+
+        .result-card {
+            display: flex;
+             flex-direction: column;
+            width: 22vw;
+         gap: 0;
+            
+        }
+
+
+        .results-image-placeholder{
+           width: 100%;               
+    height: auto;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    border-radius: 0.46vh;
+    background: transparent;
+    flex-shrink: 0;
+
+        }
+/* 
+        .results-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            opacity: 0.9;
+        } */
+
+        .results-image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        
+  display: block;
+  background: transparent;
+  border: none;
+  opacity: 1;                  
+}
+
+        /* .results-details { 
+            padding: 1vh 0.5vw;
+            margin-top: 0;
+            background-color: var(--input-bg-dark);
+        } */
+
+        .results-details {
+        background-color: rgba(47, 39, 39, 0.8);
+    padding: 1.5vh 1vw;
+    border-radius: 0.46vh;
+    color: var(--light-color);
+    align-self: stretch;
+    margin-top: 0
+        }
+
+        .watch-free {
+            color: var(--light-color); 
+            font-size: 1.4vh;
+            font-weight: 700;
+        }
+
+        .drama-title {
+            font-size: 1.6vh;
+            font-weight: 600;
+            color: var(--light-color); 
+        }
+
+        
+@media (max-width: 768px) {
+
+
+    .advanced-search-container {
+        width: 95vw;
+        padding: 4vh 4vw;
+    }
+
+    .search-options {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    /* ✅ Advanced Search back to 18px */
+    .advanced-search-container h1 {
+        font-size: 18px;
+    }
+
+    .form-row label {
+        width: 100%;
+        margin-bottom: 1vh;
+        color: var(--light-color);
+        font-size: 14px;
+    }
+
+    .genre-section h3 {
+        font-size: 14px;
+    }
+
+    .genre-text {
+        font-size: 12px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .form-actions button {
+        width: 45%;
+        font-size: 14px;
+        height: auto;
+        padding: 1.5vh 0;
+    }
+
+    .results-container {
+        width: 95vw;
+    }
+
+    .results-container h2 {
+        font-size: 16px;
+    }
+
+    .results-box {
+        padding: 4vw;
+        flex-direction: column;
+        gap: 3vh;
+    }
+
+    .result-card {
+        width: 100%;
+        flex-direction: row;
+        gap: 4vw;
+    }
+
+    .results-image-placeholder {
+        width: 100vw;
+        height: 18vw;
+    }
+
+    .results-details {
+        padding: 1vh 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .watch-free {
+        font-size: 12px;
+    }
+
+    .drama-title {
+        font-size: 14px;
+    }
+
+    .search-options button {
+        font-size: 14px;
+    }
+}
+
+    
