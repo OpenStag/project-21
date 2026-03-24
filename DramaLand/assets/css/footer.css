@@ -1,0 +1,26 @@
+.site-footer {
+    background-color: #111;
+    color: #ccc;
+    padding: 40px 0 20px;
+    margin-top: 60px;
+}
+
+.site-footer h5 {
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.site-footer a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: #e50914;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
